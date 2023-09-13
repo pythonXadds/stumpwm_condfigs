@@ -7,6 +7,12 @@
 ;; change the prefix key to something else
 (set-prefix-key (kbd "C-z"))
 
+;; set desktop background color
+(setf (xlib:window-background (screen-root (current-screen))) #x47456d)
+;; set wallpaper
+(run-shell-command "feh --bg-fill ~/Pictures/wallpaper.png")
+
+
 ;; prompt the user for an interactive command. The first arg is an
 ;; optional initial contents.
 (defcommand colon1 (&optional (initial "")) (:rest)
@@ -15,13 +21,13 @@
       (eval-command cmd t))))
 
 ;; Read some doc
-(define-key *root-map* (kbd "d") "exec dmenu_run")
+(define-key *root-map* (kbd "d") "exec rofi -show drun")
 ;; Browse somewhere
-(define-key *root-map* (kbd "b") "colon1 exec x-www-browser http://www.")
+(define-key *root-map* (kbd "b") "exec kate")
 ;; Ssh somewhere
 (define-key *root-map* (kbd "C-s") "colon1 exec x-terminal-emulator -e ssh ")
 ;; Lock screen
-(define-key *root-map* (kbd "C-l") "exec xlock")
+(define-key *root-map* (kbd "C-l") "exec nitrogen")
 
 ;; Web jump (works for DuckDuckGo and Imdb)
 (defmacro make-web-jump (name prefix)
@@ -34,7 +40,7 @@
 
 ;; C-t M-s is a terrble binding, but you get the idea.
 (define-key *root-map* (kbd "M-s") "duckduckgo")
-(define-key *root-map* (kbd "i") "imdb")
+(define-key *root-map* (kbd "q") "quit")
 
 ;; Message window font
 (set-font "-xos4-terminus-medium-r-normal--14-140-72-72-c-80-iso8859-15")
@@ -73,3 +79,6 @@
 (define-frame-preference "Emacs"
   (1 t t :restore "emacs-editing-dump" :title "...xdvi")
   (0 t t :create "emacs-dump" :class "Emacs"))
+
+(defparameter *wallpapers-dir* "/home/adamh/pictures"
+  "It contains a path to all my wallpapers")
